@@ -1,0 +1,53 @@
+% !Mode:: "TeX:UTF-8"
+% !TEX program  = xelatex
+
+\documentclass{cumcmthesis}
+%\documentclass[withoutpreface,bwprint]{cumcmthesis} %去掉封面与编号页
+
+\title{这里是我们的论文题目}
+\tihao{A}
+\baominghao{201919029020}
+\schoolname{南方科技大学}
+\membera{熊卓晨}
+\memberb{邓钧泽}
+\memberc{孔祥喆}
+\supervisor{李景治老师}
+\yearinput{2019}
+\monthinput{09}
+\dayinput{12}
+
+\begin{document}
+
+ \maketitle
+ 
+ \begin{abstract}
+ 	摘要的具体内容。
+ 	\keywords{关键词1\quad  关键词2\quad   关键词3}
+ \end{abstract}
+%目录
+\tableofcontents
+\newpage
+\section{问题重述}
+\subsection{问题的提出}
+\section{模型的假设}
+\section{符号说明}
+\begin{center}
+	\begin{tabular}{cc}
+		\hline
+		\makebox[0.3\textwidth][c]{符号}	&  \makebox[0.4\textwidth][c]{意义} \\ \hline
+		D	    & 木条宽度（cm） \\ \hline
+	\end{tabular}
+\end{center}
+\section{问题分析}
+\section{总结}
+%参考文献
+\begin{thebibliography}{9}%宽度9
+	\bibitem{bib:one} ....
+\end{thebibliography}
+
+\begin{appendices}
+	附录的内容。
+\end{appendices}
+
+
+\end{document}
