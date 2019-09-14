@@ -63,7 +63,7 @@ A 处小孔的直径为 1.4mm，通过单向阀开关控制供油时间的长短
 喷油器工作时从喷油嘴 B 处向外喷油的速率如 \cref{fig:penyou-picture} 所示。高压油泵在入口 A 处提供的压力恒为 160 MPa，高压油管内的初始压力为 100 MPa。
 \section{问题的提出}
 \subsection{问题重述}
-由题目给出的背景知识及三个问题可以分析出本文共需解决n个问题，通过解决这n个问题建立模型分析在高压油管中多个不同参数改变的情况下，如何调整油泵参数使发动机工作效率最大化。这些问题分别为：
+由题目给出的背景知识及三个问题可以分析出本文共需解决5个问题，通过解决这5个问题建立模型分析在高压油管中多个不同参数改变的情况下，如何调整油泵参数使发动机工作效率最大化。这些问题分别为：
 
 \begin{enumerate}[label=\Roman*.]
 	\item 要将高压油管内的压力尽可能稳定在 100 MPa 左右，如何设置单向阀每次开启的时长？\label{ques1} 
@@ -107,8 +107,7 @@ A 处小孔的直径为 1.4mm，通过单向阀开关控制供油时间的长短
 \begin{enumerate}[label=\Roman*.]
 	\item 根据题意，要尽可能维持高压油管内的压力为100Mpa，则单向阀门的入油质量和喷油嘴的出油质量应尽量维持在相等状态。由给出的公式可以求出不同压强条件下的燃油密度，再根据入油和出油的体积，建立方程式，解出维持100Mpa所需要的单向阀每次开启的时间。
 	\item 如果要将燃油压强提升到150Mpa，其实质是高压油管中燃油质量的增加，先计算出燃油质量的增量，再建立相应方程式，解出单向阀每次开启的时间。其中，由于高压油管内的压强在时刻变化，需要做相应的近似处理。
-	\item 首先根据附件1提供的数据，利用\textsc{Matlab}做出凸轮边缘曲线图像，分析可知，极径最大值与最小值的差即为柱塞运动到上、下止点的距离，记为$h$。根据克拉伯龙方程，以及附件1的数据可以近似求出凸轮在某一角度时，即可刚好打开单向阀门。 当凸轮继续运动到某一位置时，高压油泵内的压强下降到$100MPa$，单向阀门关闭。在这个过程中，一定质量的燃油被压进高压油管。
-	喷油嘴通过针阀来控制喷油速率，其原理是当针阀升程为正时，假定针阀处于喷油嘴中心，此时针阀底端与密封座相应截面形成一个圆环：如果该圆环面积小于喷孔面积，则喷油速率取决于圆环面积大小；如果圆环面积大于喷孔面积，此时无论针阀的升程能否继续增大，喷油速率只取决于喷孔面积大小。通过以上分析，及附件2，拟合出每个周期内喷油速率随时间变化的函数及图像。即可计算出一个周期内喷孔喷孔喷出的燃油质量。维持100MPa压强的问题同样转化为问题\ref{ques1}中的进、出高压油管的燃油质量相等问题，可以建立方程，从而求解。
+	\item 该问题相较于前两题最大的变化是进油口和出油口都从有一定参数固定的理想情况更改为输入和输出都在变化的情况。所以该题的解决方向是先根据已知数据模拟出进油和出油质量关于时间的变化情况，即可把问题转化为问题\ref{ques1}中的进、出高压油管的燃油质量相等问题，可以建立方程，从而求解。
 	\item
 	\item
 \end{enumerate}
@@ -119,34 +118,38 @@ A 处小孔的直径为 1.4mm，通过单向阀开关控制供油时间的长短
 	\item 忽略外部因素对油管的影响并排除油管的机械故障
 	\item 模型一的背景下高压油泵的出口压强保持恒定
 	\item 模型一的特例中油管内的轻微压强变化可忽略
-	\item
-	\item
+	\item 模型二中针阀处于喷油嘴正中心上下平移没有偏移
+	\item 
 	\item
 \end{enumerate}
 \section{符号说明}
 \begin{center}
-	\begin{tabular}{cc}
+	\begin{tabular}{cc|cc}
 		\toprule
-		\makebox[0.3\textwidth][c]{符号}	&  \makebox[0.4\textwidth][c]{意义} \\ \midrule
-		$V_{0}$	  & 高压油管容积($mm_{3}$)\\ 
-		$K$       & 在$160MPa$下$\frac{E}{\rho}$的值\\
+		\makebox[0.05\textwidth][c]{符号}	&  \makebox[0.2\textwidth][c]{意义}  & \makebox[0.05\textwidth][c]{符号}	&  \makebox[0.2\textwidth][c]{意义} \\
+		\midrule
+		$V_{0}$	  & 高压油管容积($mm^{3}$)& 
+%		$K$       & 在$160MPa$下$\frac{E}{\rho}$的值\\
 		$C$       & 流量系数\\
-		$A$       & 高压油泵出油口面积($mm^{3}$)\\
-		$A_{\text{孔}}$       & 喷油嘴喷孔面积($mm^{3}$)\\
-		$A_{t}$       & t时刻喷油嘴实际喷油面积($mm^{3}$)\\
-		$Q_{0}$   & 高压油管维持$100MPa$燃油流入油管速率($mm^{3}/ms$)\\
-		$Q_{1}$   & 高压油管维持$150MPa$燃油流入油管速率($mm^{3}/ms$)\\
-		$Q_{t}$   & t秒达到$150MPa$时燃油流入油管速率($mm^{3}/ms$)\\
-		$\overline{Q}$    & 等效流入速率($mm^{3}/ms$)\\
+		$A$       & 高压油泵出油口面积($mm^{2}$)&
+		$A_{\text{孔}}$       & 喷油嘴喷孔面积($mm^{2}$)\\
+		$A_{t}$       & t时刻喷油嘴实际喷油面积($mm^{2}$)&
+		$Q_{0}$   & 初始压强燃油流入速率($mm^{3}/ms$)\\
+		$Q_{1}$   & \textbf{未使用}油管速率($mm^{3}/ms$)&
+		$Q_{t}$   & \textbf{未使用}t时刻燃油流入速率($mm^{3}/ms$)\\
+		$\overline{Q_{\lambda}}$    & 等效流入速率($mm^{3}/ms$)&
 		$Q_{c}$   & 单位周期内喷嘴喷油量($mm^{3}/100ms$)\\
-		$t_{x}$   & 每次单向阀开启的时间($ms$)\\
+		$t_{x}$   & 单向阀开启的时间($ms$)&
 		$t_{0}$   & 高压油管达到目标压强所需时间($ms$)\\
-		$P_{0}$   & 初始时刻高压油管燃油压强($MPs$)\\
-		$P_{t}$   & t时刻高压油管内的燃油压强($MPs$)\\
-		$\rho_{0}$   & 初始时刻高压油管燃油压强对应的密度($mg/mm^{3}$)\\
-		$\rho_{xMPs}$   & $xMPs$压强下燃油的密度($mg/mm^{3}$)\\
-		$\overline{\rho_{c}}$   & 等效流出密度($mg/mm^{3}$)\\
-		${\triangle M}$   & 始末时刻高压油管内部燃油质量差($mg$)\\
+		$P_{0}$   & 初始时刻高压油管燃油压强($MPa$)&
+		$P_{t}$   & t时刻高压油管内的燃油压强($MPa$)\\
+		$\rho_{0}$   & 初始压强对应的密度($mg/mm^{3}$)&
+		$\rho_{xMPa}$   & $xMPa$压强下燃油的密度($mg/mm^{3}$)\\
+		$\overline{\rho_{c}}$   & 等效流出密度($mg/mm^{3}$)&
+		${\triangle M}$   & 始末时刻油管内燃油质量差($mg$)\\
+		$s_{t}$   & t时刻针阀的升程($mm$)&
+		${T_{\text{轮}}}$   & 凸轮旋转周期($ms$)\\
+		
 		\bottomrule
 	\end{tabular}
 \end{center}
@@ -178,7 +181,7 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 
 解出方程\cref{eq:ques1}得到时间$t_{x} = 0.2747ms$，该解即为问题\ref{ques1}的答案
 
-\subsubsection{推广模型：压强发生改变后维持最终压强的单向阀开启时间模型}
+\subsubsection{推广模型：压强发生改变后维持最终压强的单向阀开启时间模型}\label{case1}
 高压油管压强在输油过程中发生改变会导致高压油泵的输入速率和喷嘴的输出密度变化，因此不再适用于特例情况下的单向阀开启时间模型。随着高压油管内压强的变大，输入速率逐渐变小而输出的密度在不断增大，``压强-时间''函数在达到稳定状态前可近似拟合 为一个$\ln x$型的函数\footnote{该结果根据附件3中的数据近似拟合得到},即以下形式：
 \begin{equation}
 	P_{t} = 100+\lambda\ln (t+1)\label{eq:ques2}	
@@ -193,14 +196,14 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 	\label{fig:f(t)-picture}
 \end{figure}
 \newpage
-首先，末态和初态的压强差，可以转化为质量的增加，那么高压油管内的压强从${100MPs}$增加为${150MPs}$，实质上是高压油管内燃油的质量增加${\triangle M}$,根据质量与密度和体积的关系，很容易计算出增量${\triangle M}$。
+首先，末态和初态的压强差，可以转化为质量的增加，那么高压油管内的压强从${100MPa}$增加为${150MPa}$，实质上是高压油管内燃油的质量增加${\triangle M}$,根据质量与密度和体积的关系，很容易计算出增量${\triangle M}$。
 由于高压油管内的压强变化快，难以用模拟函数某一点的值近似表示该时刻的管内油压。所以用积分的平均值，来表示流入、流出油管的有效平均值，将变化的流入速率和变化的流出燃油密度，用其对应的有效平均值来近似等效。此时高压油泵的输入速率和喷嘴的输出密度都为恒定值，在$t_{0}$时间内，可以用$t$表示随着时间高压油管内燃油质量的增量，如果可以解出某个$t_{x}$值可以使其增量为${\triangle M}$，那么这个值即为所求单向阀开启时间。
 \subsubsection{多种情况下该模型的求解}
 根据上述对模型的描述，我们可以将模型抽象为以下三个等式：
 \begin{enumerate}
 	\item 等效平均流入速度的等式
 	\begin{equation*}
-	\overline{Q} = \frac{1}{t_{0}}\times \int_{0}^{t_{0}} C\times A\times \sqrt{\frac{2\times (160-P_{t})}{P_{160MPa}}}{\text{d}t}\label{eq:ques2-1}	
+	\overline{Q}_{\lambda} = \frac{1}{t_{0}}\times \int_{0}^{t_{0}} C\times A\times \sqrt{\frac{2\times (160-P_{t})}{P_{160MPa}}}{\text{d}t}\label{eq:ques2-1}	
 	\end{equation*}
 	\item 等效平均流出密度的等式\footnote{该等式中的常数由计算式\cref{eq:ques1-3}得到}
 	\begin{equation*}
@@ -208,13 +211,13 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 	\end{equation*}
 	\item 该模型的求解方程
 	\begin{equation}
-	t_{0}\times(\frac{\overline{Q}\times t_{x}}{t_{x}+10}\times \rho_{160MPa}-\frac{Q_{c}}{100}\times \overline{\rho_{c}})-\triangle M = 0\label{eq:ques2-3}	
+	t_{0}\times(\frac{\overline{Q_{\lambda}}\times t_{x}}{t_{x}+10}\times \rho_{160MPa}-\frac{Q_{c}}{100}\times \overline{\rho_{c}})-\triangle M = 0\label{eq:ques2-3}	
 	\end{equation}
 	使用\textsc{Matlab}解出方程\cref{eq:ques2-3}，所得到的解即是我们所需要求的阀门开启时间。以下分别就$t_{0}$的几种取值讨论解的结果。
 \end{enumerate}
 \paragraph{$t_{0}=2000ms$时}~{}
 
-代入函数\cref{eq:ques2}可计算出$\lambda=6.57$，运用该值解方程\cref{eq:ques2-3}，解得$t_{x} =2.7511$显然不符合事实。可推断在$2000ms$内无法将高压油管内燃油的压强提升至$150MPa$。为了验证这一论断，我们不妨做一个极限的假设：假设在这$2000ms$内更多的燃油并不会使高压油管内压强增大，即高压油泵能在$2000ms$内一直以最大的速率向油管输入燃油，在到达$2000ms$时燃油压强也无法到达$150MPs$。显然在该条件下没有解。
+代入函数\cref{eq:ques2}可计算出$\lambda=6.57$，运用该值解方程\cref{eq:ques2-3}，解得$t_{x} =2.7511$。该值即为调整时间内单次开启单向阀的时长。
 
 \paragraph{$t_{0}=5000ms$时}~{}
 
@@ -225,7 +228,7 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 
 \paragraph{压强达到$150MPa$时}~{}
 
-当压强稳定在$150MPa$时，该模型又回到了特例的条件下，运用\ref{case0}的结论可以得到$t_{x} = 0.7383ms$。该值即为稳定后没次单向阀的开启时间
+当压强稳定在$150MPa$时，该模型又回到了特例的条件下，运用\ref{case0}的结论可以得到$t_{x} = 0.7383ms$。该值即为稳定后每次单向阀的开启时间
 
 \subsubsection{结果分析}
 
@@ -236,6 +239,68 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 	\item$t_{0}=10000ms$时，应调整单项阀的开启时长为稳定前每次开启$2.7771ms$，稳定后每次开启$1.3794ms$。
 \end{enumerate}
 \subsection{维持高压油管压强的凸轮角速度模型}
+
+\subsubsection{题目背景下油泵处的进油模型}\label{case2}
+首先根据附件1提供的数据，利用\textsc{matlab}在极坐标下作出了凸轮边缘曲线图像。\footnote{绘图源代码详见附件}。
+
+\begin{figure}[!h]
+	\centering 
+	\includegraphics[width=0.8\textwidth]{tulun}
+	\caption{凸轮轮廓示意图}
+	\label{fig:tulun-picture}
+\end{figure}
+
+如\cref{fig:tulun-picture}所示，蓝色曲线为凸轮轮廓，凸轮绕极点旋转。
+
+分析可知，极径最大值与最小值的差即为柱塞运动到上、下止点的距离，记为h。根据克拉伯龙方程，以及附件1的数据可以近似求出凸轮在某一角度时，即可刚好打开单向阀门。 当凸轮继续运动到某一位置时，高压油泵内的压强下降到100MPa，单向阀门关闭。在这个过程中，一定质量的燃油被压进高压油管。把该过程用函数表达出来则为下图（下式）。
+\begin{figure}[!h]
+	\centering 
+	\includegraphics[width=0.8\textwidth]{zhanwei}
+	\caption{此处应有图像或公式}
+	\label{fig:f(t)-picture}
+\end{figure}
+
+\subsubsection{题目背景下喷油嘴的喷射模型}\label{case3}
+喷油嘴通过针阀来控制喷油速率，其原理是当针阀升程为正时，针阀底端与密封座相应截面形成一个圆环：如果该圆环面积小于喷孔面积，则喷油速率取决于圆环面积大小；如果圆环面积大于喷孔面积，此时无论针阀的升程能否继续增大，喷油速率只取决于喷孔面积大小。通过以上分析，及附件2，拟合出每个周期内喷油速率随时间变化的函数及图像。
+
+\begin{figure}[!h]
+	\centering 
+	\includegraphics[width=0.8\textwidth]{zhenfa}
+	\caption{针阀升程随时间变化的拟合图像}
+	\label{fig:Q(t)-picture}
+\end{figure}
+
+从图片可以看出，在$t_{1}-t_{2}$区间内圆环面积大于喷油孔的面积，因此这段时间的出油速率只能根据较小的喷油孔来计算。而在$0-t_{1}$及$t_{2}-t_{\text{末}}$的时间内出油速率则与该时刻圆环的面积$A_{t}$有关，喷油嘴的出油效率$Q_{c}$可以由下述分段函数表示，
+\begin{equation}
+Q_{t} =
+\begin{cases}
+C\times A_{\text{孔}}\times \sqrt{\frac{2\times \triangle P}{\rho_{100MPa}}} &   t_{1}<t<t_{2} ,\\
+C\times A_{\text{t}}\times \sqrt{\frac{2\times \triangle P}{\rho_{100MPa}}} &   0<t<t_{1},t_{2}<t<t_{\text{末}}
+\end{cases}\label{eq:ques3-1}
+\end{equation}
+
+其中，$A_{t}$由下述函数表示，
+\begin{equation*}
+A_{t} = \pi\times ((r_{1}+\triangle r)^{2}-r_{1}^{2})\label{eq:ques3-2}	
+\end{equation*}
+
+该式中的$\triangle r$为此时圆锥切面半径与针阀半径的差值，由\cref{fig:muzzle-picture}和题面数据可知该值可以用下述函数表示，
+\begin{equation*}
+\triangle r = s_{t}\times\tan(9^{\circ})\label{eq:ques3-3}	
+\end{equation*}
+ 
+为了让高压油管内油压的变化量尽可能小，我们需要在尽可能短的周期内使油管进出的燃油质量相等。因此，我们需要在$0-t_{\text{末}}$这个周期内对函数式\cref{eq:ques3-1}进行积分得到这个微小时间内的出油量，记作$Q_{c}$，
+\begin{equation}
+Q_{c} = \int_{0}^{t_{1}}Q_{t}\text{d}x+\int_{t_{1}}^{t_{2}}Q_{\text{孔}}\text{d}x+\int_{t_{2}}^{t_{\text{末}}}Q_{t}\text{d}x \label{eq:ques3-4}	
+\end{equation}
+
+\subsubsection{求解高压油泵中凸轮的角速度}
+结合\ref{case2}和\ref{case3}两个模型的结论，可以将维持压强的问题转化为在极短时间内进、出高压油管的燃油质量相等的问题。建立如下方程，
+
+\begin{equation*}
+ \frac{\triangle M}{T_{\text{轮}}}=\frac{\left(\int_{0}^{t_{1}}Q_{t}\text{d}x+\int_{t_{1}}^{t_{2}}Q_{\text{孔}}\text{d}x+\int_{t_{2}}^{t_{\text{末}}}Q_{t}\text{d}x\right)\times \rho_{100MPa}}{100}\label{eq:ques3-99}	
+\end{equation*}
+求解方程\cref{eq:ques3-1}可以得到凸轮旋转的周期$T = xxms$，由周期与转速的关系$\omega = \frac{2\pi}{T}$,可以得知$\omega = xxx rad/s$，该值即为问题\ref{ques3}所需求的凸轮角速度。
 
 \section{总结}
 \subsection{模型的评价}
@@ -251,7 +316,7 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 \newpage
 \begin{appendices}
 \section{计算单项阀开启时间的\textsc{Matlab}代码}
-\begin{tcode}
+\begin{lstlisting}[language=matlab]
 %高压油管的容积为V_0
 %一次周期的喷油量记Q_c
 %100MPa压强下，燃油的密度记为R_0
@@ -310,7 +375,46 @@ syms t_4
 fun_4 = @(t_4) (R_1*Q_00*t_4/(t_4+10)-R_2*Q_c/100);
 t_4 = fzero(fun_4,0.5);
 %维持150MPa每次开启时间为0.7383ms
-\end{tcode}
+\end{lstlisting}
+\section{绘制\cref{fig:f(t)-picture}的\textsc{Matlab}程序}
+\begin{lstlisting}[language=matlab]
+	t1= 0 : 1 : 2000;t2 = 0:1:5000;t3 = 0:1:10000;t=0;
+	y1 = 100+6.57*log(t1+1);
+	y2 = 100+5.87*log(t2+1);
+	y3 = 100+5.43*log(t3+1);
+	hold on
+	plot(t1,y1);
+	plot(t2,y2);
+	plot(t3,y3);
+	line([0,10000],[150,150],'linestyle',':');
+	hold on
+	x = [2000 5000 10000];
+	y = [100+6.57*log(2000+1) 100+5.87*log(5000+1) 100+5.43*log(10000+1)];
+	hold off
+	legend('t_0 = 2s','t_0 = 5s','t_0 = 10s','P = 150MPa');
+\end{lstlisting}
+
+\section{拟合\cref{fig:Q(t)-picture}的\textsc{Matlab}程序}
+\begin{lstlisting}[language=matlab]
+p1 = polyfit(ms,mm,2);
+p2 = polyfit(ms1,mm1,2);
+t1 = 0:0.01:0.44;
+t2 = 2.01:0.01:2.45;
+y1 = polyval(p1,t1);
+y2 = polyval(p2,t2);
+
+hold on
+plot(ms,mm);
+plot(ms1,mm1);
+plot(t1,y1);
+plot(t2,y2);
+line([0.44,2.01],[2,2],'linestyle',':');
+legend('0-0.44ms实际运动轨迹','2.01ms-2.45ms实际运动轨迹',
+'0-0.44ms二次函数拟合的运动轨迹','2.01ms-2.45ms二次函数拟合的运动轨迹' );
+ylim([0,3.0]);
+hold off
+\end{lstlisting}
+
 \end{appendices}
 
 
