@@ -241,8 +241,8 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 综上，可以得到问题\ref{ques2}的结果
 \begin{enumerate}
 	\item $t_{0}=2000ms$时，应调整单项阀的开启时长为稳定前每次开启$1.5160ms$，稳定后每次开启$ 0.7383ms$。
-	\item $t_{0}=5000ms$时，应调整单项阀的开启时长为稳定前每次开启$6.7607ms$，稳定后每次开启$1.3794ms$。
-	\item$t_{0}=10000ms$时，应调整单项阀的开启时长为稳定前每次开启$2.7771ms$，稳定后每次开启$1.3794ms$。
+	\item $t_{0}=5000ms$时，应调整单项阀的开启时长为稳定前每次开启$6.7607ms$，稳定后每次开启$0.7383ms$。
+	\item$t_{0}=10000ms$时，应调整单项阀的开启时长为稳定前每次开启$2.7771ms$，稳定后每次开启$0.7383ms$。
 \end{enumerate}
 \subsection{维持高压油管压强的凸轮角速度模型}\label{model2}
 
@@ -258,7 +258,9 @@ P_{t} = E\ln\rho+452.9\label{eq:ques1-3}
 
 如\cref{fig:tulun-picture}所示，蓝色曲线为凸轮轮廓，凸轮绕极点旋转。
 
-分析可知，极径最大值与最小值的差即为柱塞运动到上、下止点的距离，记为h。根据克拉伯龙方程，以及附件1的数据可以近似求出凸轮在某一角度时，即可刚好打开单向阀门。 当凸轮继续运动到某一位置时，高压油泵内的压强下降到100MPa，单向阀门关闭。在这个过程中，一定质量的燃油被压进高压油管。把该过程用函数表达出来则为下式。
+\newpage
+
+分析可知，极径最大值与最小值的差即为柱塞运动到上、下止点的距离，记为h。根据进油质量和出油质量之间的关系，以及附件1的数据可以近似求出凸轮在某一角度时，即可刚好打开单向阀门。 当凸轮继续运动到某一位置时，高压油泵内的压强下降到100MPa，单向阀门关闭。在这个过程中，一定质量的燃油被压进高压油管。把该过程用函数表达出来则为下式。
 
 \begin{equation}
 \triangle M_{\text{增}}= M_{\text{初}}-M_{\text{末}}\label{eq:ques3-5}
@@ -367,7 +369,7 @@ x = C\cdot A_{D}\cdot \sqrt{\frac{2(P_{x}-0.5)}{\rho_{100MPa}}}
 \end{enumerate}
 \section{模型的改进}
 \begin{enumerate}
-	\item 显然，在模型\cref{model1}中对压强的数值模拟中，为了简化计算把它近似为对数函数的形式是会损失精确度的。鉴于当今计算机科学的发展，高性能的计算机已经可以解出更复杂的微分方程。在由喷油泵一油管一喷油嘴所组成的燃油系统的理论模拟中, 燃油在油管中的流动情况,一般均采用一维不稳定可压缩管流作为物理模型，该模型更贴近实际情况。而该过程可以用下述方程\upcite{wang1988calculate}来描述，
+	\item 显然，在模型\ref{model1}中对压强的数值模拟中，为了简化计算把它近似为对数函数的形式是会损失精确度的。鉴于当今计算机科学的发展，高性能的计算机已经可以解出更复杂的微分方程。在由喷油泵一油管一喷油嘴所组成的燃油系统的理论模拟中, 燃油在油管中的流动情况,一般均采用一维不稳定可压缩管流作为物理模型，该模型更贴近实际情况。而该过程可以用下述方程\upcite{wang1988calculate}来描述，
 	\begin{equation}
 	\begin{cases}
 	\rho\frac{\partial \mu}{\partial x}+\frac{1}{a^{2}}\cdot\frac{\partial \rho}{\partial t}+\frac{\mu}{a^{2}}\cdot\frac{\partial p}{\partial x} = 0\\
@@ -389,6 +391,7 @@ x = C\cdot A_{D}\cdot \sqrt{\frac{2(P_{x}-0.5)}{\rho_{100MPa}}}
 %\begin{thebibliography}{9}%宽度9
 %	\bibitem{ref}
 %\end{thebibliography}
+\newpage
 \bibliographystyle{plain}
 \bibliography{ref}
 \newpage
